@@ -1,1 +1,2 @@
-src/team-service/cmd/cmd.exe
+*.exe
+*bin
