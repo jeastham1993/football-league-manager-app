@@ -15,6 +15,7 @@ var ErrInvalidArgument = errors.New("Invalid argument")
 // TeamRepository handles the persistance of teams.
 type TeamRepository interface {
 	FindByID(id string) *Team
+	Store(team Team) *string
 }
 
 // PlayerRepository repository handles the persistance of players.
