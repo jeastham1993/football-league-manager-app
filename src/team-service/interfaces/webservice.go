@@ -11,7 +11,7 @@ import (
 
 // TeamInteractor is the interface for managing teams.
 type TeamInteractor interface {
-	CreateTeam(team usecases.Team) (string, error)
+	CreateTeam(team *usecases.Team) (string, error)
 	Players(teamID string) ([]usecases.Player, error)
 }
 
@@ -22,7 +22,7 @@ type WebServiceHandler struct {
 
 // CreateTeam is the web endpoint for creating a new team.
 func (handler WebServiceHandler) CreateTeam(res http.ResponseWriter, req *http.Request) {
-	var teamToCreate usecases.Team
+	teamToCreate := new(usecases.Team)
 
 	body, err := ioutil.ReadAll(io.LimitReader(req.Body, 1048576))
 
