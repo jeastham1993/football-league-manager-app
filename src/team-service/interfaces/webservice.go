@@ -26,11 +26,11 @@ func (handler WebServiceHandler) CreateTeam(res http.ResponseWriter, req *http.R
 
 	body, err := ioutil.ReadAll(io.LimitReader(req.Body, 1048576))
 
-	if err != nil {
+	if err == nil {
 		if err := json.Unmarshal(body, &teamToCreate); err == nil {
 			createdTeamID, err := handler.TeamInteractor.CreateTeam(teamToCreate)
 
-			if err != nil {
+			if err == nil {
 				io.WriteString(res, createdTeamID)
 			}
 		}
