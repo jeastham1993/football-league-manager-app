@@ -36,4 +36,6 @@ Decide the starting point of clean architecture for the team service.
 
 ## Consequences
 
-Go Kit is a ready built and tested set of tools for creating microservice implementations using Go. They have samples for booking applications amongst others and it is well documented.
+Comitting to the tiered design proposed by Bob Martin in the book Clean Architecture gives a SOLID base for building applications. Whether this fits well for a GoLang application remains to be seen. But the proposed structure of an application makes sense as far as decoupling goes.
+
+To read more about tiered architecture and the structure checkout out this [article](https://manuel.kiessling.net/2012/09/28/applying-the-clean-architecture-to-go-applications/).
