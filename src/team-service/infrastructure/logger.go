@@ -8,6 +8,6 @@ import (
 type Logger struct{}
 
 // Log writes message to the console.
-func (logger Logger) Log(args ...interface{}) {
-	log.Println(args...)
+func (logger Logger) Log(message string) {
+	log.Println(message)
 }
