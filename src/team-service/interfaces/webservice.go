@@ -2,7 +2,6 @@ package interfaces
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -12,7 +11,7 @@ import (
 
 // TeamInteractor is the interface for managing teams.
 type TeamInteractor interface {
-	CreateTeam(team *usecases.Team) (string, error)
+	CreateTeam(team usecases.Team) (string, error)
 	Players(teamID string) ([]usecases.Player, error)
 }
 
@@ -27,11 +26,13 @@ func (handler WebServiceHandler) CreateTeam(res http.ResponseWriter, req *http.R
 
 	body, err := ioutil.ReadAll(io.LimitReader(req.Body, 1048576))
 
-	if err := json.Unmarshal(body, &teamToCreate); err != nil {
-		return nil, err
+	if err != nil {
+		if err := json.Unmarshal(body, &teamToCreate); err == nil {
+			createdTeamID, err := handler.TeamInteractor.CreateTeam(teamToCreate)
+
+			if err != nil {
+				io.WriteString(res, createdTeamID)
+			}
+		}
 	}
-
-	createdTeamID := handler.TeamInteractor.CreateTeam(teamToCreate)
-
-	io.WriteString(res, fmt.Sprintf("TeamID: %d\n", createdTeamID))
 }
