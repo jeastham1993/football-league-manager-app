@@ -1,4 +1,4 @@
-# 2. Database Provider for Team Service datastore
+# 4. Database Provider for Team Service datastore
 
 Date: 2020-01-02
 
