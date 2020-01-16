@@ -3,7 +3,7 @@ package usecases
 import (
 	"errors"
 
-	"github.com/jeastham1993/football-league-manager-app/src/team-service/domain"
+	"team-service/domain"
 )
 
 // Logger manages how logs are written.
@@ -11,9 +11,29 @@ type Logger interface {
 	Log(message string) error
 }
 
-// Team holds a reference to the team data.
-type Team struct {
+// CreateTeamRequest holds a reference to new team data.
+type CreateTeamRequest struct {
 	Name string
+}
+
+// CreateTeamResponse holds a reference to new team data.
+type CreateTeamResponse struct {
+	ID     string
+	Name   string
+	Errors []string
+}
+
+// AddPlayerToTeamRequest adds a player to a team.
+type AddPlayerToTeamRequest struct {
+	TeamID         string
+	PlayerName     string
+	PlayerPosition string
+}
+
+// AddPlayerToTeamResponse returns the complete set of players for a given team.
+type AddPlayerToTeamResponse struct {
+	Players []Player
+	Errors  []string
 }
 
 // Player holds properties for a player object.
@@ -30,10 +50,18 @@ type TeamInteractor struct {
 }
 
 // CreateTeam creates a new team in the database.
-func (interactor *TeamInteractor) CreateTeam(team *Team) (string, error) {
+func (interactor *TeamInteractor) CreateTeam(team *CreateTeamRequest) (*CreateTeamResponse, error) {
 	if len(team.Name) == 0 {
 		interactor.Logger.Log("Team name cannot be empty")
-		return "", errors.New("Team name cannot be empty")
+		var response = &CreateTeamResponse{
+			ID:     "",
+			Name:   team.Name,
+			Errors: make([]string, 1),
+		}
+
+		response.Errors[0] = "Team name cannot be empty"
+
+		return response, errors.New("Team name cannot be empty")
 	}
 
 	newTeam := &domain.Team{
@@ -42,7 +70,10 @@ func (interactor *TeamInteractor) CreateTeam(team *Team) (string, error) {
 
 	createdTeamID := interactor.TeamRepository.Store(newTeam)
 
-	return createdTeamID, nil
+	return &CreateTeamResponse{
+		ID:   createdTeamID,
+		Name: newTeam.Name,
+	}, nil
 }
 
 // Players retrieves a list of players for a given team.
@@ -58,4 +89,34 @@ func (interactor *TeamInteractor) Players(teamID string) ([]Player, error) {
 	}
 
 	return players, nil
+}
+
+// AddPlayerToTeam adds a player to a team.
+func (interactor *TeamInteractor) AddPlayerToTeam(request *AddPlayerToTeamRequest) (AddPlayerToTeamResponse, error) {
+	var response AddPlayerToTeamResponse
+
+	team := interactor.TeamRepository.FindByID(request.TeamID)
+
+	if team != nil {
+		newPlayer := &domain.Player{
+			Name:     request.PlayerName,
+			Position: request.PlayerPosition,
+		}
+
+		err := team.AddPlayer(newPlayer)
+
+		if err != nil {
+			return response, err
+		}
+
+		response.Players = make([]Player, len(team.Players))
+
+		interactor.TeamRepository.Update(team)
+
+		for i, player := range team.Players {
+			response.Players[i] = Player{player.Name, player.Position}
+		}
+	}
+
+	return response, nil
 }

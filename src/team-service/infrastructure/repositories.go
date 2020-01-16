@@ -1,9 +1,10 @@
-package interfaces
+package infrastructure
 
 import (
 	"sync"
 
-	"github.com/jeastham1993/football-league-manager-app/src/team-service/domain"
+	"team-service/domain"
+
 	"github.com/rs/xid"
 )
 
@@ -38,4 +39,10 @@ func (r *InMemTeamRepo) FindByID(teamID string) *domain.Team {
 	}
 
 	return nil
+}
+
+// Update updates an existing team record
+func (r *InMemTeamRepo) Update(team *domain.Team) *domain.Team {
+	r.teams[team.ID] = team
+	return team
 }

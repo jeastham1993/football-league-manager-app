@@ -3,7 +3,7 @@ package usecases
 import (
 	"testing"
 
-	"github.com/jeastham1993/football-league-manager-app/src/team-service/domain"
+	"team-service/domain"
 )
 
 type mockLogger struct {
@@ -20,6 +20,10 @@ func (repo *mockTeamRepository) Store(team *domain.Team) string {
 	newTeamID := "123"
 
 	return newTeamID
+}
+
+func (repo *mockTeamRepository) Update(team *domain.Team) *domain.Team {
+	return team
 }
 
 func (repo *mockTeamRepository) FindByID(id string) *domain.Team {
@@ -46,13 +50,13 @@ func (repo *mockTeamRepository) FindByID(id string) *domain.Team {
 func TestCanCreateTeam(t *testing.T) {
 	teamInteractor := createInMemTeamInteractor()
 
-	team := &Team{
+	team := &CreateTeamRequest{
 		Name: "Cornwall FC",
 	}
 
-	createdTeamID, err := teamInteractor.CreateTeam(team)
+	createTeamResponse, err := teamInteractor.CreateTeam(team)
 
-	if err != nil || len(createdTeamID) == 0 {
+	if err != nil || len(createTeamResponse.ID) == 0 {
 		t.Fatalf("Team has not been created")
 	}
 }
@@ -60,13 +64,13 @@ func TestCanCreateTeam(t *testing.T) {
 func TestCanCreateTeam_EmptyName_ShouldError(t *testing.T) {
 	teamInteractor := createInMemTeamInteractor()
 
-	team := &Team{
+	team := &CreateTeamRequest{
 		Name: "",
 	}
 
-	createdTeamID, err := teamInteractor.CreateTeam(team)
+	createTeamResponse, err := teamInteractor.CreateTeam(team)
 
-	if err == nil || len(createdTeamID) > 0 {
+	if err == nil || len(createTeamResponse.Errors) == 0 {
 		t.Fatalf("Creating a team with no name should throw error")
 	}
 }
@@ -78,6 +82,38 @@ func TestCanRetrievePlayersFromATeam(t *testing.T) {
 
 	if err != nil || len(players) != 2 {
 		t.Fatalf("Players not retrieved")
+	}
+}
+
+func TestCanAddPlayerToATeam(t *testing.T) {
+	teamInteractor := createInMemTeamInteractor()
+
+	addPlayerToTeamReq := &AddPlayerToTeamRequest{
+		TeamID:         "1",
+		PlayerName:     "James Eastham",
+		PlayerPosition: "ST",
+	}
+
+	team, err := teamInteractor.AddPlayerToTeam(addPlayerToTeamReq)
+
+	if err == nil || len(team.Players) > 2 {
+		t.Fatalf("Player has been added and shouldn't have been")
+	}
+}
+
+func TestCanAddDuplicatePlayerToATeam(t *testing.T) {
+	teamInteractor := createInMemTeamInteractor()
+
+	addPlayerToTeamReq := &AddPlayerToTeamRequest{
+		TeamID:         "1",
+		PlayerName:     "Karl Eastham",
+		PlayerPosition: "ST",
+	}
+
+	team, err := teamInteractor.AddPlayerToTeam(addPlayerToTeamReq)
+
+	if err != nil || len(team.Players) != 3 {
+		t.Fatalf("Players not added successfully")
 	}
 }
 

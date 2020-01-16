@@ -34,6 +34,14 @@ func MakeHandler(svcEndpoints Endpoints) http.Handler {
 	))
 
 	// HTTP Post - /orders
+	r.Methods("POST").Path("/team/{id}/players").Handler(kithttp.NewServer(
+		svcEndpoints.AddPlayerToTeam,
+		decodedAddPlayerToTeamRequest,
+		encodeResponse,
+		options...,
+	))
+
+	// HTTP Post - /orders
 	r.Methods("GET").Path("/team/{id}").Handler(kithttp.NewServer(
 		svcEndpoints.GetByID,
 		decodedGetByIDRequest,
@@ -62,6 +70,27 @@ func decodedGetByIDRequest(_ context.Context, r *http.Request) (request interfac
 		return nil, ErrBadRouting
 	}
 	return loadTeamRequest{ID: id}, nil
+}
+
+func decodedAddPlayerToTeamRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
+	vars := mux.Vars(r)
+	id, ok := vars["id"]
+
+	if !ok {
+		return nil, ErrBadRouting
+	}
+
+	var addPlayerToTeamRequest addPlayerToTeamRequest
+
+	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
+
+	if err := json.Unmarshal(body, &addPlayerToTeamRequest); err != nil {
+		return nil, err
+	}
+
+	addPlayerToTeamRequest.ID = id
+
+	return addPlayerToTeamRequest, nil
 }
 
 func encodeResponse(ctx context.Context, w http.ResponseWriter, response interface{}) error {

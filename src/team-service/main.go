@@ -11,9 +11,8 @@ import (
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
 
-	"github.com/jeastham1993/football-league-manager-app/src/team-service/infrastructure"
-	"github.com/jeastham1993/football-league-manager-app/src/team-service/interfaces"
-	"github.com/jeastham1993/football-league-manager-app/src/team-service/usecases"
+	"team-service/infrastructure"
+	"team-service/usecases"
 )
 
 func main() {
@@ -39,7 +38,7 @@ func main() {
 	defer level.Info(logger).Log("msg", "service ended")
 
 	teamInteractor := new(usecases.TeamInteractor)
-	teamInteractor.TeamRepository = interfaces.NewInMemTeamRepo()
+	teamInteractor.TeamRepository = infrastructure.NewInMemTeamRepo()
 	teamInteractor.Logger = new(infrastructure.Logger)
 
 	var h http.Handler
