@@ -40,6 +40,7 @@ func main() {
 	teamInteractor := new(usecases.TeamInteractor)
 	teamInteractor.TeamRepository = infrastructure.NewInMemTeamRepo()
 	teamInteractor.Logger = new(infrastructure.Logger)
+	teamInteractor.EventHandler = new(infrastructure.MockEventBus)
 
 	var h http.Handler
 	{

@@ -28,6 +28,11 @@ type PlayerRepository interface {
 	FindByID(id string) *Player
 }
 
+// Event holds details about the event to be published
+type Event interface {
+	AsEvent() []byte
+}
+
 // Team is a base entity.
 type Team struct {
 	ID      string    `json:"id"`

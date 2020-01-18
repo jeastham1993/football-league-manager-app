@@ -1,6 +1,7 @@
 package usecases
 
 import (
+	"encoding/json"
 	"errors"
 
 	"team-service/domain"
@@ -9,6 +10,11 @@ import (
 // Logger manages how logs are written.
 type Logger interface {
 	Log(message string) error
+}
+
+// EventBus handles interactions with the application event bus.
+type EventBus interface {
+	Publish(event domain.Event) error
 }
 
 // ErrTeamNotFound is returned when a team is searched for and not found in the database.
@@ -76,6 +82,24 @@ type TeamInteractor struct {
 	TeamRepository   domain.TeamRepository
 	PlayerRepository domain.PlayerRepository
 	Logger           Logger
+	EventHandler     EventBus
+}
+
+// TeamCreatedEvent is published when a new team is created.
+type TeamCreatedEvent struct {
+	TeamName string
+	TeamID   string
+}
+
+// AsEvent returns a string representation of the given object.
+func (t TeamCreatedEvent) AsEvent() []byte {
+	responseBytes, err := json.Marshal(t)
+
+	if err == nil {
+		return responseBytes
+	}
+
+	return nil
 }
 
 // CreateTeam creates a new team in the database.
@@ -98,6 +122,11 @@ func (interactor *TeamInteractor) CreateTeam(team *CreateTeamRequest) (*CreateTe
 	}
 
 	createdTeamID := interactor.TeamRepository.Store(newTeam)
+
+	interactor.EventHandler.Publish(TeamCreatedEvent{
+		TeamID:   createdTeamID,
+		TeamName: team.Name,
+	})
 
 	return &CreateTeamResponse{
 		ID:   createdTeamID,
