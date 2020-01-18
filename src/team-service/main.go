@@ -38,7 +38,8 @@ func main() {
 	defer level.Info(logger).Log("msg", "service ended")
 
 	teamInteractor := new(usecases.TeamInteractor)
-	teamInteractor.TeamRepository = infrastructure.NewInMemTeamRepo()
+	// teamInteractor.TeamRepository = infrastructure.NewInMemTeamRepo()
+	teamInteractor.TeamRepository = new(infrastructure.DynamoDbRepository)
 	teamInteractor.Logger = new(infrastructure.Logger)
 	teamInteractor.EventHandler = new(infrastructure.MockEventBus)
 
