@@ -12,6 +12,9 @@ var validPositions = [...]string{
 // ErrInvalidArgument is thrown when a method argument is invalid.
 var ErrInvalidArgument = errors.New("Invalid argument")
 
+// ErrNonExistentPlayer is thrown when a player is attempted to be removed and doesn't exist.
+var ErrNonExistentPlayer = errors.New("Player does not exist and cannot be removed")
+
 // TeamRepository handles the persistance of teams.
 type TeamRepository interface {
 	FindByID(id string) *Team
@@ -35,6 +38,30 @@ type Team struct {
 type Player struct {
 	Name     string `json:"name"`
 	Position string `json:"position"`
+}
+
+// RemovePlayer removes the given player from the team.
+func (team *Team) RemovePlayer(name, position string) error {
+	playerRemoved := false
+
+	for i, v := range team.Players {
+		if v.Name == name && v.Position == position {
+			playerRemoved = true
+
+			if len(team.Players) == 1 {
+				team.Players = nil
+				break
+			}
+
+			team.Players = append(team.Players[:i], team.Players[i+1])
+		}
+	}
+
+	if playerRemoved {
+		return nil
+	}
+
+	return ErrNonExistentPlayer
 }
 
 // AddPlayer adds a player to a team.
