@@ -1,6 +1,7 @@
 package infrastructure
 
 import (
+	"strings"
 	"sync"
 
 	"team-service/domain"
@@ -45,4 +46,24 @@ func (r *InMemTeamRepo) FindByID(teamID string) *domain.Team {
 func (r *InMemTeamRepo) Update(team *domain.Team) *domain.Team {
 	r.teams[team.ID] = team
 	return team
+}
+
+// Search looks for a record in the database with the requiste search term
+func (r *InMemTeamRepo) Search(searchTerm string) []domain.Team {
+	teamsResponse := make([]domain.Team, 0)
+	addedTeamCounter := 0
+
+	for _, t := range r.teams {
+		if strings.Contains(t.Name, searchTerm) {
+			teamsResponse = append(teamsResponse, domain.Team{
+				ID:      t.ID,
+				Name:    t.Name,
+				Players: t.Players,
+			})
+
+			addedTeamCounter++
+		}
+	}
+
+	return teamsResponse
 }

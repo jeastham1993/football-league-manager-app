@@ -20,6 +20,7 @@ type TeamRepository interface {
 	FindByID(id string) *Team
 	Store(team *Team) string
 	Update(team *Team) *Team
+	Search(searchTerm string) []Team
 }
 
 // PlayerRepository repository handles the persistance of players.

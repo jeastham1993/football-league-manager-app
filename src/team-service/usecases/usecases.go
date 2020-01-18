@@ -11,6 +11,9 @@ type Logger interface {
 	Log(message string) error
 }
 
+// ErrTeamNotFound is returned when a team is searched for and not found in the database.
+var ErrTeamNotFound = errors.New("Specified team not found")
+
 // CreateTeamRequest holds a reference to new team data.
 type CreateTeamRequest struct {
 	Name string
@@ -32,12 +35,38 @@ type AddPlayerToTeamRequest struct {
 
 // AddPlayerToTeamResponse returns the complete set of players for a given team.
 type AddPlayerToTeamResponse struct {
-	Players []Player
+	Players []PlayerDTO
 	Errors  []string
 }
 
-// Player holds properties for a player object.
-type Player struct {
+// RemovePlayerFromTeamRequest removes a player from a team
+type RemovePlayerFromTeamRequest struct {
+	TeamID         string
+	PlayerName     string
+	PlayerPosition string
+}
+
+// RemovePlayerFromTeamResponse returns the player list after having the player removed along with any errors.
+type RemovePlayerFromTeamResponse struct {
+	Players []PlayerDTO
+	Errors  []string
+}
+
+// SearchTeamsResponse allows the searching of teams in the database.
+type SearchTeamsResponse struct {
+	Teams  []TeamDTO
+	Errors []string
+}
+
+// TeamDTO holds properties for a team object.
+type TeamDTO struct {
+	ID      string
+	Name    string
+	Players []PlayerDTO
+}
+
+// PlayerDTO holds properties for a player object.
+type PlayerDTO struct {
 	Name     string
 	Position string
 }
@@ -76,19 +105,26 @@ func (interactor *TeamInteractor) CreateTeam(team *CreateTeamRequest) (*CreateTe
 	}, nil
 }
 
-// Players retrieves a list of players for a given team.
-func (interactor *TeamInteractor) Players(teamID string) ([]Player, error) {
-	var players []Player
+// FindByID retrieves data about a specific team
+func (interactor *TeamInteractor) FindByID(teamID string) (*TeamDTO, error) {
+	var players []PlayerDTO
 
 	team := interactor.TeamRepository.FindByID(teamID)
 
-	players = make([]Player, len(team.Players))
-
-	for i, player := range team.Players {
-		players[i] = Player{player.Name, player.Position}
+	if team == nil {
+		return nil, ErrTeamNotFound
 	}
 
-	return players, nil
+	players = make([]PlayerDTO, len(team.Players))
+
+	for i, player := range team.Players {
+		players[i] = PlayerDTO{player.Name, player.Position}
+	}
+
+	return &TeamDTO{
+		Name:    team.Name,
+		Players: players,
+	}, nil
 }
 
 // AddPlayerToTeam adds a player to a team.
@@ -109,13 +145,69 @@ func (interactor *TeamInteractor) AddPlayerToTeam(request *AddPlayerToTeamReques
 			return response, err
 		}
 
-		response.Players = make([]Player, len(team.Players))
+		response.Players = make([]PlayerDTO, len(team.Players))
 
 		interactor.TeamRepository.Update(team)
 
 		for i, player := range team.Players {
-			response.Players[i] = Player{player.Name, player.Position}
+			response.Players[i] = PlayerDTO{player.Name, player.Position}
 		}
+	}
+
+	return response, nil
+}
+
+// RemovePlayerFromTeam adds a player to a team.
+func (interactor *TeamInteractor) RemovePlayerFromTeam(request *RemovePlayerFromTeamRequest) (RemovePlayerFromTeamResponse, error) {
+	var response RemovePlayerFromTeamResponse
+
+	team := interactor.TeamRepository.FindByID(request.TeamID)
+
+	if team != nil {
+		err := team.RemovePlayer(request.PlayerName, request.PlayerPosition)
+
+		if err != nil {
+			response.Errors = make([]string, 1)
+			response.Errors[0] = err.Error()
+
+			return response, err
+		}
+
+		response.Players = make([]PlayerDTO, len(team.Players))
+
+		interactor.TeamRepository.Update(team)
+
+		for i, player := range team.Players {
+			response.Players[i] = PlayerDTO{player.Name, player.Position}
+		}
+	}
+
+	return response, nil
+}
+
+// Search allows searching across all teams in the database.
+func (interactor *TeamInteractor) Search(searchTerm string) (SearchTeamsResponse, error) {
+	var response SearchTeamsResponse
+
+	teams := interactor.TeamRepository.Search(searchTerm)
+
+	if teams == nil {
+		response.Errors = make([]string, 1)
+		response.Errors[0] = "No results found"
+
+		return response, ErrTeamNotFound
+	}
+
+	response.Teams = make([]TeamDTO, len(teams))
+
+	for i, team := range teams {
+		teamDTO := TeamDTO{team.ID, team.Name, make([]PlayerDTO, len(team.Players))}
+
+		for _, player := range team.Players {
+			teamDTO.Players[i] = PlayerDTO{player.Name, player.Position}
+		}
+
+		response.Teams[i] = teamDTO
 	}
 
 	return response, nil

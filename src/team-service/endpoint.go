@@ -10,17 +10,21 @@ import (
 
 // Endpoints holds al possible endpoints for the team servive.
 type Endpoints struct {
-	Create          endpoint.Endpoint
-	GetByID         endpoint.Endpoint
-	AddPlayerToTeam endpoint.Endpoint
+	Create               endpoint.Endpoint
+	GetByID              endpoint.Endpoint
+	AddPlayerToTeam      endpoint.Endpoint
+	RemovePlayerFromTeam endpoint.Endpoint
+	Search               endpoint.Endpoint
 }
 
 // MakeEndpoints initializes all Go kit endpoints for the team service.
 func MakeEndpoints(teamInteractor *usecases.TeamInteractor) Endpoints {
 	return Endpoints{
-		Create:          createTeamEndpoint(teamInteractor),
-		GetByID:         loadTeamEndpoint(teamInteractor),
-		AddPlayerToTeam: addPlayerToTeamEndpoint(teamInteractor),
+		Create:               createTeamEndpoint(teamInteractor),
+		GetByID:              loadTeamEndpoint(teamInteractor),
+		AddPlayerToTeam:      addPlayerToTeamEndpoint(teamInteractor),
+		RemovePlayerFromTeam: removePlayerFromTeamEndpoint(teamInteractor),
+		Search:               searchEndpoint(teamInteractor),
 	}
 }
 
@@ -53,8 +57,8 @@ type loadTeamRequest struct {
 }
 
 type loadTeamResponse struct {
-	Players []usecases.Player `json:"players,omitempty"`
-	Err     error             `json:"error,omitempty`
+	Team *usecases.TeamDTO `json:"team"`
+	Err  error             `json:"error,omitempty`
 }
 
 func (r loadTeamResponse) error() error { return r.Err }
@@ -62,34 +66,63 @@ func (r loadTeamResponse) error() error { return r.Err }
 func loadTeamEndpoint(teamInteractor *usecases.TeamInteractor) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(loadTeamRequest)
-		team, err := teamInteractor.Players(req.ID)
+		team, err := teamInteractor.FindByID(req.ID)
 
-		return loadTeamResponse{Players: team, Err: err}, nil
+		return loadTeamResponse{Team: team, Err: err}, nil
 	}
 }
 
-type addPlayerToTeamRequest struct {
+type playerManagementRequest struct {
 	ID       string
 	Name     string
 	Position string
+	Type     string
 }
 
-type addPlayerToTeamResponse struct {
-	Players []usecases.Player `json:"players,omitempty"`
-	Err     error             `json:"error,omitempty`
+type playerManagementResponse struct {
+	Players []usecases.PlayerDTO `json:"players"`
+	Err     error                `json:"error,omitempty`
 }
 
-func (r addPlayerToTeamResponse) error() error { return r.Err }
+func (r playerManagementResponse) error() error { return r.Err }
 
 func addPlayerToTeamEndpoint(teamInteractor *usecases.TeamInteractor) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		req := request.(addPlayerToTeamRequest)
+		req := request.(playerManagementRequest)
 		players, err := teamInteractor.AddPlayerToTeam(&usecases.AddPlayerToTeamRequest{
 			TeamID:         req.ID,
 			PlayerName:     req.Name,
 			PlayerPosition: req.Position,
 		})
 
-		return addPlayerToTeamResponse{Players: players.Players, Err: err}, nil
+		return playerManagementResponse{Players: players.Players, Err: err}, nil
+	}
+}
+
+func removePlayerFromTeamEndpoint(teamInteractor *usecases.TeamInteractor) endpoint.Endpoint {
+	return func(ctx context.Context, request interface{}) (interface{}, error) {
+		req := request.(playerManagementRequest)
+		players, err := teamInteractor.RemovePlayerFromTeam(&usecases.RemovePlayerFromTeamRequest{
+			TeamID:         req.ID,
+			PlayerName:     req.Name,
+			PlayerPosition: req.Position,
+		})
+
+		return playerManagementResponse{Players: players.Players, Err: err}, nil
+	}
+}
+
+type searchTeamResponse struct {
+	Teams []usecases.TeamDTO `json:"teams"`
+	Err   error              `json:"error,omitempty`
+}
+
+func searchEndpoint(teamInteractor *usecases.TeamInteractor) endpoint.Endpoint {
+	return func(ctx context.Context, request interface{}) (interface{}, error) {
+		req := request.(string)
+
+		searchResponse, err := teamInteractor.Search(req)
+
+		return searchTeamResponse{Teams: searchResponse.Teams, Err: err}, nil
 	}
 }

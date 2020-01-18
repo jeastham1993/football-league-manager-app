@@ -25,7 +25,6 @@ func MakeHandler(svcEndpoints Endpoints) http.Handler {
 		kithttp.ServerErrorEncoder(encodeError),
 	}
 
-	// HTTP Post - /orders
 	r.Methods("POST").Path("/team").Handler(kithttp.NewServer(
 		svcEndpoints.Create,
 		decodeCreateRequest,
@@ -33,7 +32,6 @@ func MakeHandler(svcEndpoints Endpoints) http.Handler {
 		options...,
 	))
 
-	// HTTP Post - /orders
 	r.Methods("POST").Path("/team/{id}/players").Handler(kithttp.NewServer(
 		svcEndpoints.AddPlayerToTeam,
 		decodedAddPlayerToTeamRequest,
@@ -41,10 +39,23 @@ func MakeHandler(svcEndpoints Endpoints) http.Handler {
 		options...,
 	))
 
-	// HTTP Post - /orders
+	r.Methods("DELETE").Path("/team/{id}/players").Handler(kithttp.NewServer(
+		svcEndpoints.RemovePlayerFromTeam,
+		decodedRemovePlayerFromTeamRequest,
+		encodeResponse,
+		options...,
+	))
+
 	r.Methods("GET").Path("/team/{id}").Handler(kithttp.NewServer(
 		svcEndpoints.GetByID,
 		decodedGetByIDRequest,
+		encodeResponse,
+		options...,
+	))
+
+	r.Methods("GET").Path("/team").Handler(kithttp.NewServer(
+		svcEndpoints.Search,
+		decodedSearchRequest,
 		encodeResponse,
 		options...,
 	))
@@ -72,6 +83,18 @@ func decodedGetByIDRequest(_ context.Context, r *http.Request) (request interfac
 	return loadTeamRequest{ID: id}, nil
 }
 
+func decodedSearchRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
+	searchTermQueryParam := r.URL.Query()["search"]
+
+	searchTerm := ""
+
+	if len(searchTermQueryParam) > 0 {
+		searchTerm = searchTermQueryParam[0]
+	}
+
+	return searchTerm, nil
+}
+
 func decodedAddPlayerToTeamRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
 	vars := mux.Vars(r)
 	id, ok := vars["id"]
@@ -80,7 +103,7 @@ func decodedAddPlayerToTeamRequest(_ context.Context, r *http.Request) (request 
 		return nil, ErrBadRouting
 	}
 
-	var addPlayerToTeamRequest addPlayerToTeamRequest
+	var addPlayerToTeamRequest playerManagementRequest
 
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 
@@ -91,6 +114,27 @@ func decodedAddPlayerToTeamRequest(_ context.Context, r *http.Request) (request 
 	addPlayerToTeamRequest.ID = id
 
 	return addPlayerToTeamRequest, nil
+}
+
+func decodedRemovePlayerFromTeamRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
+	vars := mux.Vars(r)
+	id, ok := vars["id"]
+
+	if !ok {
+		return nil, ErrBadRouting
+	}
+
+	var removePlayerFromTeamRequest playerManagementRequest
+
+	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
+
+	if err := json.Unmarshal(body, &removePlayerFromTeamRequest); err != nil {
+		return nil, err
+	}
+
+	removePlayerFromTeamRequest.ID = id
+
+	return removePlayerFromTeamRequest, nil
 }
 
 func encodeResponse(ctx context.Context, w http.ResponseWriter, response interface{}) error {
