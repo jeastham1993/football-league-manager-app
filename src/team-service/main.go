@@ -39,7 +39,7 @@ func main() {
 
 	teamInteractor := new(usecases.TeamInteractor)
 	// teamInteractor.TeamRepository = infrastructure.NewInMemTeamRepo()
-	teamInteractor.TeamRepository = new(infrastructure.DynamoDbRepository)
+	teamInteractor.TeamRepository = infrastructure.NewDynamoDbRepo()
 	teamInteractor.Logger = new(infrastructure.Logger)
 	teamInteractor.EventHandler = new(infrastructure.MockEventBus)
 
