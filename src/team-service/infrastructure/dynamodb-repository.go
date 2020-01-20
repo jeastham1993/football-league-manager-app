@@ -90,16 +90,13 @@ func (r *DynamoDbRepository) Store(team *domain.Team) string {
 func (r *DynamoDbRepository) FindByID(teamID string) *domain.Team {
 	filt := expression.Name("id").Equal(expression.Value(teamID))
 
-	proj := expression.NamesList(expression.Name("teamName"), expression.Name("id"), expression.Name("players"))
-
-	expr, _ := expression.NewBuilder().WithFilter(filt).WithProjection(proj).Build()
+	expr, _ := expression.NewBuilder().WithFilter(filt).Build()
 
 	// Build the query input parameters
 	params := &dynamodb.ScanInput{
 		ExpressionAttributeNames:  expr.Names(),
 		ExpressionAttributeValues: expr.Values(),
 		FilterExpression:          expr.Filter(),
-		ProjectionExpression:      expr.Projection(),
 		TableName:                 aws.String("Teams"),
 	}
 
@@ -168,16 +165,13 @@ func (r *DynamoDbRepository) Search(searchTerm string) []domain.Team {
 
 	filt := expression.Name("teamName").Contains(searchTerm)
 
-	proj := expression.NamesList(expression.Name("teamName"), expression.Name("id"), expression.Name("players"))
-
-	expr, err := expression.NewBuilder().WithFilter(filt).WithProjection(proj).Build()
+	expr, err := expression.NewBuilder().WithFilter(filt).Build()
 
 	// Build the query input parameters
 	params := &dynamodb.ScanInput{
 		ExpressionAttributeNames:  expr.Names(),
 		ExpressionAttributeValues: expr.Values(),
 		FilterExpression:          expr.Filter(),
-		ProjectionExpression:      expr.Projection(),
 		TableName:                 aws.String("Teams"),
 	}
 
