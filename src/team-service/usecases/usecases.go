@@ -102,6 +102,44 @@ func (t TeamCreatedEvent) AsEvent() []byte {
 	return nil
 }
 
+// PlayerAddedEvent is published when a new player is added to a team
+type PlayerAddedEvent struct {
+	TeamName       string
+	TeamID         string
+	PlayerName     string
+	PlayerPosition string
+}
+
+// AsEvent returns a string representation of the given object.
+func (p PlayerAddedEvent) AsEvent() []byte {
+	responseBytes, err := json.Marshal(p)
+
+	if err == nil {
+		return responseBytes
+	}
+
+	return nil
+}
+
+// PlayerRemovedEvent is published when a new player is added to a team
+type PlayerRemovedEvent struct {
+	TeamName       string
+	TeamID         string
+	PlayerName     string
+	PlayerPosition string
+}
+
+// AsEvent returns a string representation of the given object.
+func (p PlayerRemovedEvent) AsEvent() []byte {
+	responseBytes, err := json.Marshal(p)
+
+	if err == nil {
+		return responseBytes
+	}
+
+	return nil
+}
+
 // CreateTeam creates a new team in the database.
 func (interactor *TeamInteractor) CreateTeam(team *CreateTeamRequest) (*CreateTeamResponse, error) {
 	if len(team.Name) == 0 {
@@ -181,6 +219,13 @@ func (interactor *TeamInteractor) AddPlayerToTeam(request *AddPlayerToTeamReques
 		for i, player := range team.Players {
 			response.Players[i] = PlayerDTO{player.Name, player.Position}
 		}
+
+		interactor.EventHandler.Publish(&PlayerAddedEvent{
+			TeamName:       team.Name,
+			TeamID:         team.ID,
+			PlayerName:     request.PlayerName,
+			PlayerPosition: request.PlayerPosition,
+		})
 	}
 
 	return response, nil
@@ -209,6 +254,13 @@ func (interactor *TeamInteractor) RemovePlayerFromTeam(request *RemovePlayerFrom
 		for i, player := range team.Players {
 			response.Players[i] = PlayerDTO{player.Name, player.Position}
 		}
+
+		interactor.EventHandler.Publish(&PlayerRemovedEvent{
+			TeamName:       team.Name,
+			TeamID:         team.ID,
+			PlayerName:     request.PlayerName,
+			PlayerPosition: request.PlayerPosition,
+		})
 	}
 
 	return response, nil
