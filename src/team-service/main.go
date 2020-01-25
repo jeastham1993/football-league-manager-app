@@ -41,7 +41,14 @@ func main() {
 	// teamInteractor.TeamRepository = infrastructure.NewInMemTeamRepo()
 	teamInteractor.TeamRepository = infrastructure.NewDynamoDbRepo()
 	teamInteractor.Logger = new(infrastructure.Logger)
-	teamInteractor.EventHandler = new(infrastructure.MockEventBus)
+	// teamInteractor.EventHandler = new(infrastructure.MockEventBus)
+
+	requiredQueues := make([]string, 3)
+	requiredQueues[0] = "leaguemanager-newteam"
+	requiredQueues[1] = "leaguemanager-newplayer"
+	requiredQueues[2] = "leaguemanager-playerremoved"
+
+	teamInteractor.EventHandler = infrastructure.NewAmazonSqsEventBus(requiredQueues)
 
 	var h http.Handler
 	{

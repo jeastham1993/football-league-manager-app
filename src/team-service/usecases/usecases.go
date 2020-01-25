@@ -14,7 +14,7 @@ type Logger interface {
 
 // EventBus handles interactions with the application event bus.
 type EventBus interface {
-	Publish(event domain.Event) error
+	Publish(queue string, event domain.Event) error
 }
 
 // ErrTeamNotFound is returned when a team is searched for and not found in the database.
@@ -161,7 +161,7 @@ func (interactor *TeamInteractor) CreateTeam(team *CreateTeamRequest) (*CreateTe
 
 	createdTeamID := interactor.TeamRepository.Store(newTeam)
 
-	interactor.EventHandler.Publish(TeamCreatedEvent{
+	interactor.EventHandler.Publish("leaguemanager-newteam", TeamCreatedEvent{
 		TeamID:   createdTeamID,
 		TeamName: team.Name,
 	})
@@ -220,7 +220,7 @@ func (interactor *TeamInteractor) AddPlayerToTeam(request *AddPlayerToTeamReques
 			response.Players[i] = PlayerDTO{player.Name, player.Position}
 		}
 
-		interactor.EventHandler.Publish(&PlayerAddedEvent{
+		interactor.EventHandler.Publish("leaguemanager-newplayer", &PlayerAddedEvent{
 			TeamName:       team.Name,
 			TeamID:         team.ID,
 			PlayerName:     request.PlayerName,
@@ -255,7 +255,7 @@ func (interactor *TeamInteractor) RemovePlayerFromTeam(request *RemovePlayerFrom
 			response.Players[i] = PlayerDTO{player.Name, player.Position}
 		}
 
-		interactor.EventHandler.Publish(&PlayerRemovedEvent{
+		interactor.EventHandler.Publish("leaguemanager-playerremoved", &PlayerRemovedEvent{
 			TeamName:       team.Name,
 			TeamID:         team.ID,
 			PlayerName:     request.PlayerName,
