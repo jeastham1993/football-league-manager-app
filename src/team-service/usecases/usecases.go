@@ -161,7 +161,7 @@ func (interactor *TeamInteractor) CreateTeam(team *CreateTeamRequest) (*CreateTe
 
 	createdTeamID := interactor.TeamRepository.Store(newTeam)
 
-	interactor.EventHandler.Publish("leaguemanager-newteam", TeamCreatedEvent{
+	interactor.EventHandler.Publish("leaguemanager-info-newteamcreated", TeamCreatedEvent{
 		TeamID:   createdTeamID,
 		TeamName: team.Name,
 	})
