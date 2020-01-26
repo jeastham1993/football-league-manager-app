@@ -30,7 +30,8 @@ func NewDynamoDbRepo() *DynamoDbRepository {
 	}))
 
 	// Create DynamoDB client
-	svc := dynamodb.New(sess, &aws.Config{Endpoint: aws.String("http://localhost:8000")})
+	// svc := dynamodb.New(sess, &aws.Config{Endpoint: aws.String("http://localhost:8000")})
+	svc := dynamodb.New(sess)
 
 	tableInput := &dynamodb.CreateTableInput{
 		AttributeDefinitions: []*dynamodb.AttributeDefinition{
