@@ -5,6 +5,7 @@
 
 trigger:
 - master
+- 'release/*'
 
 jobs:
 - job: run_unit_tests
@@ -44,3 +45,8 @@ jobs:
       archiveType: 'zip'
       archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
       replaceExistingArchive: true
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
