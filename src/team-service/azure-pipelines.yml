@@ -6,14 +6,41 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-latest'
+jobs:
+- job: run_unit_tests
+  displayName: 'Run Unit Test'
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  # Run domain level tests
+  - task: Go@0
+    inputs:
+      command: 'test'
+      workingDirectory: 'src/team-service/domain'
+  # Run use case level tests
+  - task: Go@0
+    inputs:
+      command: 'test'
+      workingDirectory: 'src/team-service/usecases'
+  # Ensure application can build
+  - task: Go@0
+    inputs:
+      command: 'build'
+      workingDirectory: 'src/team-service/'
+  
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- job: package_application_files
+  displayName: 'Package application files'
+  dependsOn: [ run_unit_tests ]
+  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'))
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  # Create zip file of team-service
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: 'src/team-service'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      replaceExistingArchive: true
