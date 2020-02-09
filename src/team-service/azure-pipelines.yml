@@ -5,6 +5,7 @@
 
 trigger:
 - master
+- 'release/*'
 
 jobs:
 - job: run_unit_tests
