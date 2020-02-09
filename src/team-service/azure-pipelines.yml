@@ -13,12 +13,12 @@ jobs:
     vmImage: 'ubuntu-latest'
   steps:
   # Run domain level tests
-  - task: Go@
+  - task: Go@0
     inputs:
       command: 'test'
       workingDirectory: 'src/team-service/domain'
   # Run use case level tests
-  - task: Go@
+  - task: Go@0
     inputs:
       command: 'test'
       workingDirectory: 'src/team-service/usecases'
