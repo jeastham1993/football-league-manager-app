@@ -13,6 +13,17 @@ func (logger *mockLogger) Log(message string) error {
 	return nil
 }
 
+type mockEventHandler struct {
+
+}
+
+// Publish sends a new message to the event bus.
+func (ev mockEventHandler) Publish(queueName string, evt domain.Event) error {
+	println(string(evt.AsEvent()))
+
+	return nil
+}
+
 type mockTeamRepository struct {
 }
 
@@ -186,6 +197,7 @@ func TestCanLoadAllTeams(t *testing.T) {
 func createInMemTeamInteractor() *TeamInteractor {
 	teamInteractor := &TeamInteractor{
 		TeamRepository: &mockTeamRepository{},
+		EventHandler: &mockEventHandler{},
 		Logger:         &mockLogger{},
 	}
 
