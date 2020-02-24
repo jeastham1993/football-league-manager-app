@@ -1,0 +1,22 @@
+﻿@page "/teams"
+
+@using LeagueManager.Services
+
+@inject TeamState state
+
+<div id="team-search">
+    <div id="search-area">
+        <Search OnSearch="state.Search" />
+    </div>
+    <div id="search-results">
+        <SearchResults Teams="state.TeamSearchResults" />
+    </div>
+</div>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        state.OnChange += StateHasChanged;
+    }
+}

@@ -1,0 +1,50 @@
+﻿@page "/teams/{TeamId}"
+
+@inject TeamState state
+
+@if (teamData == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <h1>@teamData.Name</h1>
+    <h2>Current Players</h2>
+    <CreatePlayer OnSave="state.AddPlayer" TeamId="TeamId"/>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Position</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Player player in teamData.Players)
+                {
+                    <tr>
+                        <th scope="row">
+                            @player.Name
+                        </th>
+                        <td>@player.Position</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+
+@code {
+    [Parameter]
+    public string TeamId { get; set; }
+
+    private Team teamData { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        state.OnChange += StateHasChanged;
+
+        teamData = await state.GetSpecific(this.TeamId);
+    }
+}

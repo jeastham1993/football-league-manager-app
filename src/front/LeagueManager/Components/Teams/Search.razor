@@ -1,0 +1,21 @@
+<div class="col">
+    <h3>Search</h3>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search" aria-label="Search Term" @bind="searchTerm">
+    </div>
+    <div class="row py-1">
+        <div class="ml-auto">
+            <button @onclick="() => OnSearch.InvokeAsync(searchTerm)" type="button" class="btn btn-danger px-5">
+                Search ➝
+            </button>
+        </div>
+    </div>
+</div>
+
+@code
+{
+    [Parameter]
+    public EventCallback<string> OnSearch { get; set; }
+
+    private string searchTerm = string.Empty;
+}

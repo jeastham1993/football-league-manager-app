@@ -1,0 +1,36 @@
+﻿<div class="col">
+    <div class="row py-1">
+        @if (Teams == null || Teams.Count == 0)
+        {
+            <p>No results found.</p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Team team in Teams)
+                    {
+                        <tr>
+                            <th scope="row">
+                                <a href="/teams/@team.Id">@team.Id</a>
+                            </th>
+                            <td>@team.Name</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+
+@code
+{
+    [Parameter]
+    public IReadOnlyList<Team> Teams { get; set; }
+}

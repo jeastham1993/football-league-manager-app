@@ -1,0 +1,38 @@
+﻿<EditForm Model=@newPlayer>
+    <div class="col">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Name" aria-label="Search Term" @bind="newPlayer.Name">
+        </div>
+        <div class="input-group mb-3">
+            <InputSelect @bind-Value=newPlayer.Position class="custom-select">
+                <option value="GK">Goalkeeper</option>
+                <option value="DEF">Defender</option>
+                <option value="MID">Midfielder</option>
+                <option value="ST">Striker</option>
+            </InputSelect>
+        </div>
+        <div class="row py-1">
+            <div class="ml-auto">
+                <button @onclick="() => OnSave.InvokeAsync(newPlayer)" type="button" class="btn btn-danger px-5">
+                    Search ➝
+                </button>
+            </div>
+        </div>
+    </div>
+</EditForm>
+@code
+{
+    [Parameter]
+    public EventCallback<Player> OnSave { get; set; }
+
+    [Parameter]
+    public string TeamId { get; set; }
+
+    private Player newPlayer = new Player();
+
+    protected override Task OnInitializedAsync()
+    {
+        newPlayer.TeamId = this.TeamId;
+        return base.OnInitializedAsync();
+    }
+}
