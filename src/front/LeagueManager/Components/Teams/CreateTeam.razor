@@ -1,0 +1,32 @@
+﻿<div class="col">
+    <h2>Create a team</h2>
+    <EditForm Model=@newTeam>
+        <div class="col">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Name" aria-label="Search Term" @bind="newTeam.Name">
+            </div>
+            <div class="row py-1">
+                <div class="ml-auto">
+                    <button @onclick="() => OnSave.InvokeAsync(newTeam)" type="button" class="btn btn-danger px-5">
+                        Add +
+                    </button>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+</div>
+@code
+{
+    [Parameter]
+    public EventCallback<Team> OnSave { get; set; }
+
+    [Parameter]
+    public string TeamId { get; set; }
+
+    private Team newTeam = new Team();
+
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
+}

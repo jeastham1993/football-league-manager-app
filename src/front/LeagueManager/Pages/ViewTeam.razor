@@ -1,0 +1,28 @@
+﻿@page "/teams/{TeamId}"
+
+@using Microsoft.Extensions.Logging
+@using LeagueManager.Components.Teams
+
+@inject TeamState state
+
+<TeamMetadata TeamData="@teamData" TeamId="@TeamId" OnAddPlayer="state.AddPlayer" OnDeletePlayer="state.DeletePlayer" />
+
+
+@code {
+    [Parameter]
+    public string TeamId { get; set; }
+
+    private Team teamData { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        state.OnChange += StateHasChanged;
+
+        teamData = await state.GetSpecific(this.TeamId).ConfigureAwait(false);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        teamData = await state.GetSpecific(this.TeamId).ConfigureAwait(false);
+    }
+}

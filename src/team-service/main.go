@@ -10,6 +10,7 @@ import (
 
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
+	"github.com/rs/cors"
 
 	"team-service/infrastructure"
 	"team-service/usecases"
@@ -61,8 +62,9 @@ func main() {
 		level.Info(logger).Log("transport", "HTTP", "addr", *httpAddr)
 		server := &http.Server{
 			Addr:    *httpAddr,
-			Handler: h,
+			Handler: cors.Default().Handler(h),
 		}
+
 		errs <- server.ListenAndServe()
 	}()
 

@@ -1,0 +1,32 @@
+﻿<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Position</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Player player in Players)
+        {
+            <tr>
+                <th scope="row">
+                    @player.Name
+                </th>
+                <td>@player.Position</td>
+                <td>
+                    <button @onclick="() => OnDelete.InvokeAsync(player)" type="button" class="btn btn-danger px-5">
+                        Search ➝
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public EventCallback<Player> OnDelete { get; set; }
+
+    [Parameter]
+    public IEnumerable<Player> Players { get; set; }
+}

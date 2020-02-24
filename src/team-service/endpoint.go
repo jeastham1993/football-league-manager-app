@@ -29,7 +29,7 @@ func MakeEndpoints(teamInteractor *usecases.TeamInteractor) Endpoints {
 }
 
 type createTeamRequest struct {
-	TeamName string
+	Name string
 }
 
 type createTeamResponse struct {
@@ -43,7 +43,7 @@ func createTeamEndpoint(teamInteractor *usecases.TeamInteractor) endpoint.Endpoi
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(createTeamRequest)
 		team := &usecases.CreateTeamRequest{
-			Name: req.TeamName,
+			Name: req.Name,
 		}
 
 		createdTeam, err := teamInteractor.CreateTeam(team)

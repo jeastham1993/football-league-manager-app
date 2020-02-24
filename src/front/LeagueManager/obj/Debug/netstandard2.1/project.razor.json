@@ -9,99 +9,80 @@
     "TagHelpers": [
       {
         "Kind": "Components.Component",
-        "Name": "LeagueManager.App",
+        "Name": "LeagueManager.Components.Teams.SearchResults",
         "AssemblyName": "LeagueManager",
         "Documentation": null,
         "TagOutputHint": null,
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "App",
+            "TagName": "SearchResults",
             "ParentTag": null,
             "TagStructure": 0,
             "Attributes": [],
             "Diagnostics": []
           }
         ],
-        "BoundAttributes": [],
+        "BoundAttributes": [
+          {
+            "Kind": "Components.Component",
+            "Name": "Teams",
+            "TypeName": "System.Collections.Generic.IReadOnlyList<LeagueManager.Models.Team>",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "Teams"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
         "AllowedChildTags": [],
         "Diagnostics": [],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "LeagueManager.App"
+          "Common.TypeName": "LeagueManager.Components.Teams.SearchResults"
         }
       },
       {
         "Kind": "Components.Component",
-        "Name": "LeagueManager.App",
+        "Name": "LeagueManager.Components.Teams.SearchResults",
         "AssemblyName": "LeagueManager",
         "Documentation": null,
         "TagOutputHint": null,
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "LeagueManager.App",
+            "TagName": "LeagueManager.Components.Teams.SearchResults",
             "ParentTag": null,
             "TagStructure": 0,
             "Attributes": [],
             "Diagnostics": []
           }
         ],
-        "BoundAttributes": [],
-        "AllowedChildTags": [],
-        "Diagnostics": [],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "LeagueManager.App",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
-        "Kind": "Components.Component",
-        "Name": "LeagueManager.Components.Index",
-        "AssemblyName": "LeagueManager",
-        "Documentation": null,
-        "TagOutputHint": null,
-        "CaseSensitive": true,
-        "TagMatchingRules": [
+        "BoundAttributes": [
           {
-            "TagName": "Index",
-            "ParentTag": null,
-            "TagStructure": 0,
-            "Attributes": [],
-            "Diagnostics": []
+            "Kind": "Components.Component",
+            "Name": "Teams",
+            "TypeName": "System.Collections.Generic.IReadOnlyList<LeagueManager.Models.Team>",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "Teams"
+            },
+            "BoundAttributeParameters": []
           }
         ],
-        "BoundAttributes": [],
         "AllowedChildTags": [],
         "Diagnostics": [],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "LeagueManager.Components.Index"
-        }
-      },
-      {
-        "Kind": "Components.Component",
-        "Name": "LeagueManager.Components.Index",
-        "AssemblyName": "LeagueManager",
-        "Documentation": null,
-        "TagOutputHint": null,
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "LeagueManager.Components.Index",
-            "ParentTag": null,
-            "TagStructure": 0,
-            "Attributes": [],
-            "Diagnostics": []
-          }
-        ],
-        "BoundAttributes": [],
-        "AllowedChildTags": [],
-        "Diagnostics": [],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "LeagueManager.Components.Index",
+          "Common.TypeName": "LeagueManager.Components.Teams.SearchResults",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
@@ -297,93 +278,14 @@
       },
       {
         "Kind": "Components.Component",
-        "Name": "LeagueManager.Components.Teams.SearchResults",
+        "Name": "LeagueManager.Components.Teams.CreateTeam",
         "AssemblyName": "LeagueManager",
         "Documentation": null,
         "TagOutputHint": null,
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "SearchResults",
-            "ParentTag": null,
-            "TagStructure": 0,
-            "Attributes": [],
-            "Diagnostics": []
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "Components.Component",
-            "Name": "Teams",
-            "TypeName": "System.Collections.Generic.IReadOnlyList<LeagueManager.Models.Team>",
-            "IsEnum": false,
-            "IndexerNamePrefix": null,
-            "IndexerTypeName": null,
-            "Documentation": null,
-            "Diagnostics": [],
-            "Metadata": {
-              "Common.PropertyName": "Teams"
-            },
-            "BoundAttributeParameters": []
-          }
-        ],
-        "AllowedChildTags": [],
-        "Diagnostics": [],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "LeagueManager.Components.Teams.SearchResults"
-        }
-      },
-      {
-        "Kind": "Components.Component",
-        "Name": "LeagueManager.Components.Teams.SearchResults",
-        "AssemblyName": "LeagueManager",
-        "Documentation": null,
-        "TagOutputHint": null,
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "LeagueManager.Components.Teams.SearchResults",
-            "ParentTag": null,
-            "TagStructure": 0,
-            "Attributes": [],
-            "Diagnostics": []
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "Components.Component",
-            "Name": "Teams",
-            "TypeName": "System.Collections.Generic.IReadOnlyList<LeagueManager.Models.Team>",
-            "IsEnum": false,
-            "IndexerNamePrefix": null,
-            "IndexerTypeName": null,
-            "Documentation": null,
-            "Diagnostics": [],
-            "Metadata": {
-              "Common.PropertyName": "Teams"
-            },
-            "BoundAttributeParameters": []
-          }
-        ],
-        "AllowedChildTags": [],
-        "Diagnostics": [],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "LeagueManager.Components.Teams.SearchResults",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
-        "Kind": "Components.Component",
-        "Name": "LeagueManager.Components.Teams.Teams",
-        "AssemblyName": "LeagueManager",
-        "Documentation": null,
-        "TagOutputHint": null,
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "Teams",
+            "TagName": "CreateTeam",
             "ParentTag": null,
             "TagStructure": 0,
             "Attributes": [],
@@ -395,19 +297,19 @@
         "Diagnostics": [],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "LeagueManager.Components.Teams.Teams"
+          "Common.TypeName": "LeagueManager.Components.Teams.CreateTeam"
         }
       },
       {
         "Kind": "Components.Component",
-        "Name": "LeagueManager.Components.Teams.Teams",
+        "Name": "LeagueManager.Components.Teams.CreateTeam",
         "AssemblyName": "LeagueManager",
         "Documentation": null,
         "TagOutputHint": null,
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "LeagueManager.Components.Teams.Teams",
+            "TagName": "LeagueManager.Components.Teams.CreateTeam",
             "ParentTag": null,
             "TagStructure": 0,
             "Attributes": [],
@@ -419,86 +321,154 @@
         "Diagnostics": [],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "LeagueManager.Components.Teams.Teams",
+          "Common.TypeName": "LeagueManager.Components.Teams.CreateTeam",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
       {
         "Kind": "Components.Component",
-        "Name": "LeagueManager.Components.Teams.ViewTeam",
+        "Name": "LeagueManager.Components.Teams.PlayerList",
         "AssemblyName": "LeagueManager",
         "Documentation": null,
         "TagOutputHint": null,
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "ViewTeam",
+            "TagName": "PlayerList",
             "ParentTag": null,
             "TagStructure": 0,
             "Attributes": [],
             "Diagnostics": []
           }
         ],
-        "BoundAttributes": [
-          {
-            "Kind": "Components.Component",
-            "Name": "TeamId",
-            "TypeName": "System.String",
-            "IsEnum": false,
-            "IndexerNamePrefix": null,
-            "IndexerTypeName": null,
-            "Documentation": null,
-            "Diagnostics": [],
-            "Metadata": {
-              "Common.PropertyName": "TeamId"
-            },
-            "BoundAttributeParameters": []
-          }
-        ],
+        "BoundAttributes": [],
         "AllowedChildTags": [],
         "Diagnostics": [],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "LeagueManager.Components.Teams.ViewTeam"
+          "Common.TypeName": "LeagueManager.Components.Teams.PlayerList"
         }
       },
       {
         "Kind": "Components.Component",
-        "Name": "LeagueManager.Components.Teams.ViewTeam",
+        "Name": "LeagueManager.Components.Teams.PlayerList",
         "AssemblyName": "LeagueManager",
         "Documentation": null,
         "TagOutputHint": null,
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "LeagueManager.Components.Teams.ViewTeam",
+            "TagName": "LeagueManager.Components.Teams.PlayerList",
             "ParentTag": null,
             "TagStructure": 0,
             "Attributes": [],
             "Diagnostics": []
           }
         ],
-        "BoundAttributes": [
-          {
-            "Kind": "Components.Component",
-            "Name": "TeamId",
-            "TypeName": "System.String",
-            "IsEnum": false,
-            "IndexerNamePrefix": null,
-            "IndexerTypeName": null,
-            "Documentation": null,
-            "Diagnostics": [],
-            "Metadata": {
-              "Common.PropertyName": "TeamId"
-            },
-            "BoundAttributeParameters": []
-          }
-        ],
+        "BoundAttributes": [],
         "AllowedChildTags": [],
         "Diagnostics": [],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "LeagueManager.Components.Teams.ViewTeam",
+          "Common.TypeName": "LeagueManager.Components.Teams.PlayerList",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "Kind": "Components.Component",
+        "Name": "LeagueManager.Components.Teams.TeamMetadata",
+        "AssemblyName": "LeagueManager",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "TeamMetadata",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "LeagueManager.Components.Teams.TeamMetadata"
+        }
+      },
+      {
+        "Kind": "Components.Component",
+        "Name": "LeagueManager.Components.Teams.TeamMetadata",
+        "AssemblyName": "LeagueManager",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "LeagueManager.Components.Teams.TeamMetadata",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "LeagueManager.Components.Teams.TeamMetadata",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "Kind": "Components.Component",
+        "Name": "LeagueManager.Shared.NavMenu",
+        "AssemblyName": "LeagueManager",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "NavMenu",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "LeagueManager.Shared.NavMenu"
+        }
+      },
+      {
+        "Kind": "Components.Component",
+        "Name": "LeagueManager.Shared.NavMenu",
+        "AssemblyName": "LeagueManager",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "LeagueManager.Shared.NavMenu",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "LeagueManager.Shared.NavMenu",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
@@ -636,14 +606,14 @@
       },
       {
         "Kind": "Components.Component",
-        "Name": "LeagueManager.Shared.NavMenu",
+        "Name": "LeagueManager.App",
         "AssemblyName": "LeagueManager",
         "Documentation": null,
         "TagOutputHint": null,
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "NavMenu",
+            "TagName": "App",
             "ParentTag": null,
             "TagStructure": 0,
             "Attributes": [],
@@ -655,19 +625,19 @@
         "Diagnostics": [],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "LeagueManager.Shared.NavMenu"
+          "Common.TypeName": "LeagueManager.App"
         }
       },
       {
         "Kind": "Components.Component",
-        "Name": "LeagueManager.Shared.NavMenu",
+        "Name": "LeagueManager.App",
         "AssemblyName": "LeagueManager",
         "Documentation": null,
         "TagOutputHint": null,
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "LeagueManager.Shared.NavMenu",
+            "TagName": "LeagueManager.App",
             "ParentTag": null,
             "TagStructure": 0,
             "Attributes": [],
@@ -679,7 +649,184 @@
         "Diagnostics": [],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "LeagueManager.Shared.NavMenu",
+          "Common.TypeName": "LeagueManager.App",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "Kind": "Components.Component",
+        "Name": "LeagueManager.Pages.Index",
+        "AssemblyName": "LeagueManager",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "Index",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "LeagueManager.Pages.Index"
+        }
+      },
+      {
+        "Kind": "Components.Component",
+        "Name": "LeagueManager.Pages.Index",
+        "AssemblyName": "LeagueManager",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "LeagueManager.Pages.Index",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "LeagueManager.Pages.Index",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "Kind": "Components.Component",
+        "Name": "LeagueManager.Pages.Teams",
+        "AssemblyName": "LeagueManager",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "Teams",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "LeagueManager.Pages.Teams"
+        }
+      },
+      {
+        "Kind": "Components.Component",
+        "Name": "LeagueManager.Pages.Teams",
+        "AssemblyName": "LeagueManager",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "LeagueManager.Pages.Teams",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "LeagueManager.Pages.Teams",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "Kind": "Components.Component",
+        "Name": "LeagueManager.Pages.ViewTeam",
+        "AssemblyName": "LeagueManager",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "ViewTeam",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "Components.Component",
+            "Name": "TeamId",
+            "TypeName": "System.String",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "TeamId"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "LeagueManager.Pages.ViewTeam"
+        }
+      },
+      {
+        "Kind": "Components.Component",
+        "Name": "LeagueManager.Pages.ViewTeam",
+        "AssemblyName": "LeagueManager",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "LeagueManager.Pages.ViewTeam",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "Components.Component",
+            "Name": "TeamId",
+            "TypeName": "System.String",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "TeamId"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "LeagueManager.Pages.ViewTeam",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
@@ -16726,6 +16873,11 @@
   "RootNamespace": "LeagueManager",
   "Documents": [
     {
+      "FilePath": "c:\\Users\\jeast\\source\\Github\\league-manager\\football-league-manager-app\\src\\front\\LeagueManager\\Pages\\Index.razor",
+      "TargetPath": "Pages\\Index.razor",
+      "FileKind": "component"
+    },
+    {
       "FilePath": "c:\\Users\\jeast\\source\\Github\\league-manager\\football-league-manager-app\\src\\front\\LeagueManager\\Components\\Teams\\SearchResults.razor",
       "TargetPath": "Components\\Teams\\SearchResults.razor",
       "FileKind": "component"
@@ -16736,8 +16888,18 @@
       "FileKind": "component"
     },
     {
+      "FilePath": "c:\\Users\\jeast\\source\\Github\\league-manager\\football-league-manager-app\\src\\front\\LeagueManager\\Pages\\ViewTeam.razor",
+      "TargetPath": "Pages\\ViewTeam.razor",
+      "FileKind": "component"
+    },
+    {
       "FilePath": "c:\\Users\\jeast\\source\\Github\\league-manager\\football-league-manager-app\\src\\front\\LeagueManager\\Components\\Teams\\CreatePlayer.razor",
       "TargetPath": "Components\\Teams\\CreatePlayer.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "c:\\Users\\jeast\\source\\Github\\league-manager\\football-league-manager-app\\src\\front\\LeagueManager\\Components\\Teams\\PlayerList.razor",
+      "TargetPath": "Components\\Teams\\PlayerList.razor",
       "FileKind": "component"
     },
     {
@@ -16746,13 +16908,23 @@
       "FileKind": "component"
     },
     {
-      "FilePath": "c:\\Users\\jeast\\source\\Github\\league-manager\\football-league-manager-app\\src\\front\\LeagueManager\\Components\\Teams\\Search.razor",
-      "TargetPath": "Components\\Teams\\Search.razor",
+      "FilePath": "c:\\Users\\jeast\\source\\Github\\league-manager\\football-league-manager-app\\src\\front\\LeagueManager\\Pages\\Teams.razor",
+      "TargetPath": "Pages\\Teams.razor",
       "FileKind": "component"
     },
     {
-      "FilePath": "c:\\Users\\jeast\\source\\Github\\league-manager\\football-league-manager-app\\src\\front\\LeagueManager\\Components\\Teams\\ViewTeam.razor",
-      "TargetPath": "Components\\Teams\\ViewTeam.razor",
+      "FilePath": "c:\\Users\\jeast\\source\\Github\\league-manager\\football-league-manager-app\\src\\front\\LeagueManager\\Components\\Teams\\CreateTeam.razor",
+      "TargetPath": "Components\\Teams\\CreateTeam.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "c:\\Users\\jeast\\source\\Github\\league-manager\\football-league-manager-app\\src\\front\\LeagueManager\\Components\\Teams\\TeamMetadata.razor",
+      "TargetPath": "Components\\Teams\\TeamMetadata.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "c:\\Users\\jeast\\source\\Github\\league-manager\\football-league-manager-app\\src\\front\\LeagueManager\\Components\\Teams\\Search.razor",
+      "TargetPath": "Components\\Teams\\Search.razor",
       "FileKind": "component"
     },
     {
@@ -16761,19 +16933,9 @@
       "FileKind": "component"
     },
     {
-      "FilePath": "c:\\Users\\jeast\\source\\Github\\league-manager\\football-league-manager-app\\src\\front\\LeagueManager\\Components\\Teams\\Teams.razor",
-      "TargetPath": "Components\\Teams\\Teams.razor",
-      "FileKind": "component"
-    },
-    {
       "FilePath": "c:\\Users\\jeast\\source\\Github\\league-manager\\football-league-manager-app\\src\\front\\LeagueManager\\_Imports.razor",
       "TargetPath": "_Imports.razor",
       "FileKind": "componentImport"
-    },
-    {
-      "FilePath": "c:\\Users\\jeast\\source\\Github\\league-manager\\football-league-manager-app\\src\\front\\LeagueManager\\Components\\Index.razor",
-      "TargetPath": "Components\\Index.razor",
-      "FileKind": "component"
     }
   ],
   "SerializationFormat": "0.2"

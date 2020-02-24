@@ -1,0 +1,27 @@
+﻿@if (TeamData == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <h1>@TeamData.Name</h1>
+    <h2>Current Players</h2>
+    <CreatePlayer OnSave="OnAddPlayer" TeamId="@TeamId" />
+    <div>
+        <PlayerList Players="@TeamData.Players" OnDelete="OnDeletePlayer" />
+    </div>
+}
+
+@code {
+    [Parameter]
+    public Team TeamData { get; set; }
+
+    [Parameter]
+    public string TeamId { get; set; }
+
+    [Parameter]
+    public EventCallback<Player> OnAddPlayer { get; set; }
+
+    [Parameter]
+    public EventCallback<Player> OnDeletePlayer { get; set; }
+}

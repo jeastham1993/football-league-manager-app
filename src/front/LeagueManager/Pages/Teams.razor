@@ -1,0 +1,35 @@
+﻿@page "/teams"
+
+@using LeagueManager.Services
+@using LeagueManager.Components.Teams
+
+@inject TeamState state
+
+<div id="team-search">
+    <div id="new-team">
+        <CreateTeam OnSave="this.CreateTeam" />
+    </div>
+    <div id="search-area">
+        <Search OnSearch="state.Search" />
+    </div>
+    <div id="search-results">
+        <SearchResults Teams="state.TeamSearchResults" />
+    </div>
+</div>
+
+@code { 
+
+    protected override async Task OnInitializedAsync()
+    {
+        state.OnChange += StateHasChanged;
+
+        await state.Search(string.Empty);
+    }
+
+    public async Task CreateTeam(Team team)
+    {
+        await this.state.CreateTeam(team);
+
+        await state.ReRunSearch();
+    }
+}

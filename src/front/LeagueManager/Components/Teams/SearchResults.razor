@@ -16,7 +16,7 @@
                 <tbody>
                     @foreach (Team team in Teams)
                     {
-                        <tr>
+                        <tr @key="team.Id">
                             <th scope="row">
                                 <a href="/teams/@team.Id">@team.Id</a>
                             </th>

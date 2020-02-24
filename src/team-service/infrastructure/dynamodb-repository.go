@@ -166,7 +166,7 @@ func (r *DynamoDbRepository) Search(searchTerm string) []domain.Team {
 
 	filt := expression.Name("teamName").Contains(searchTerm)
 
-	expr, err := expression.NewBuilder().WithFilter(filt).Build()
+	expr, _ := expression.NewBuilder().WithFilter(filt).Build()
 
 	// Build the query input parameters
 	params := &dynamodb.ScanInput{
@@ -176,21 +176,48 @@ func (r *DynamoDbRepository) Search(searchTerm string) []domain.Team {
 		TableName:                 aws.String("Teams"),
 	}
 
-	// Make the DynamoDB Query API call
-	result, err := r.dynamoSvc.Scan(params)
-
-	for _, i := range result.Items {
-		item := domain.Team{}
-
-		err = dynamodbattribute.UnmarshalMap(i, &item)
-
-		teamsResponse = append(teamsResponse, item)
-
-		if err != nil {
-			fmt.Println("Got error unmarshalling:")
-			fmt.Println(err.Error())
-		}
+	noFilterParams := &dynamodb.ScanInput{
+		TableName: aws.String("Teams"),
 	}
 
-	return teamsResponse
+	if len(searchTerm) == 0 {
+		// Make the DynamoDB Query API call
+		result, err := r.dynamoSvc.Scan(noFilterParams)
+
+		for _, i := range result.Items {
+			item := domain.Team{}
+
+			err = dynamodbattribute.UnmarshalMap(i, &item)
+
+			teamsResponse = append(teamsResponse, item)
+
+			if err != nil {
+				fmt.Println("Got error unmarshalling:")
+				fmt.Println(err.Error())
+			}
+		}
+
+		return teamsResponse
+	}
+
+	if len(searchTerm) > 0 {
+		result, err := r.dynamoSvc.Scan(params)
+
+		for _, i := range result.Items {
+			item := domain.Team{}
+
+			err = dynamodbattribute.UnmarshalMap(i, &item)
+
+			teamsResponse = append(teamsResponse, item)
+
+			if err != nil {
+				fmt.Println("Got error unmarshalling:")
+				fmt.Println(err.Error())
+			}
+		}
+
+		return teamsResponse
+	}
+
+	return nil
 }
