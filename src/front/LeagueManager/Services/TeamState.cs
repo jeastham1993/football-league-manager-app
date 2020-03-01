@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -8,7 +7,6 @@ using System.Threading.Tasks;
 using LeagueManager.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using Microsoft.JSInterop;
 
 namespace LeagueManager.Services
 {
@@ -58,7 +56,6 @@ namespace LeagueManager.Services
                 this._logger.LogError("Failure adding player");
             }
         }
-
         public async Task AddPlayer(Player player)
         {
             try
